@@ -9,6 +9,8 @@ endif::[]
 [[release-notes-x.x.x]]
 ==== x.x.x - YYYY/MM/DD
 
+
+
 [float]
 ===== Breaking changes
 
