@@ -44,7 +44,7 @@ jobs:
         run: |
           echo "as long as there is a major.x branch"
           existed_in_local=$(git ls-remote --heads origin ${TARGET_BRANCH})
-          if [ -z ${existed_in_local} ]; then
+          if [ -z "${existed_in_local}" ]; then
             echo -e "::warning::Target branch '${TARGET_BRANCH}' does not exist."
             exit 0
           fi
@@ -63,7 +63,7 @@ jobs:
         run: |
           echo "as long as there is no a major.x branch"
           existed_in_local=$(git ls-remote --heads origin ${TARGET_BRANCH})
-          if [ -n ${existed_in_local} ]; then
+          if [ -n "${existed_in_local}" ]; then
             echo -e "::warning::Target branch '${TARGET_BRANCH}' does exist."
             exit 0
           fi
