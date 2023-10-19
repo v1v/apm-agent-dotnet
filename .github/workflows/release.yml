@@ -48,7 +48,8 @@ jobs:
             echo -e "::warning::Target branch '${TARGET_BRANCH}' does not exist."
             exit 0
           fi
-          git checkout ${TARGET_BRANCH} -b ${NEW_BRANCH}
+          git branch -D $TARGET_BRANCH
+          git checkout -b ${NEW_BRANCH}
           git format-patch -k --stdout ${TARGET_BRANCH}...main -- docs CHANGELOG.asciidoc | git am -3 -k
           git push origin ${NEW_BRANCH}
           gh pr create \
@@ -56,8 +57,7 @@ jobs:
             --body "Generated automatically with ${JOB_URL}" \
             --head "elastic:${NEW_BRANCH}" \
             --base "$TARGET_BRANCH" \
-            --repo "${{ github.repository }}" \
-            --draft
+            --repo "${{ github.repository }}"
 
       - name: Create branch if major release
         run: |
