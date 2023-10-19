@@ -59,7 +59,7 @@ jobs:
           gh pr create \
             --title "post-release: ${GIT_TAG}" \
             --body "Generated automatically with ${JOB_URL}" \
-            --head "elastic:${NEW_BRANCH}" \
+            --head "v1v:${NEW_BRANCH}" \
             --base "$TARGET_BRANCH" \
             --repo "${{ github.repository }}"
 
