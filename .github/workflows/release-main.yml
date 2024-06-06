@@ -2,7 +2,7 @@ name: release-main
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "test/provenance" ]
 
 permissions:
   attestations: write
@@ -36,12 +36,14 @@ jobs:
 
     # Github packages requires authentication, this is likely going away in the future so for now we publish to feedz.io
     - name: publish canary packages to feedz.io
+      if: startsWith(github.ref, 'refs/tags')
       run: dotnet nuget push 'build/output/_packages/*.nupkg' -k ${{ secrets.FEEDZ_IO_API_KEY }} -s ${{ secrets.FEEDZ_IO_API_URL }} --skip-duplicate --no-symbols
       
     - name: publish canary packages github package repository
+      if: startsWith(github.ref, 'refs/tags')
       run: dotnet nuget push 'build/output/_packages/*.nupkg' -k ${{secrets.GITHUB_TOKEN}} -s https://nuget.pkg.github.com/elastic/index.json --skip-duplicate --no-symbols
     
-    - if: ${{ failure() }}
+    - if: ${{ failure() && startsWith(github.ref, 'refs/tags') }}
       uses: elastic/oblt-actions/slack/send@v1.7.0
       with:
         bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
