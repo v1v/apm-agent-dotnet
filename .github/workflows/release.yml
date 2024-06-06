@@ -66,6 +66,8 @@ jobs:
           type=semver,value=${{ steps.bootstrap.outputs.agent-version }}
           # "edge" Docker tag on git push to default branch
           type=edge
+          # testing purposes
+          type=raw,value=latest,prefix=test-,enable=${{ github.ref == format('refs/heads/{0}', 'test/provenance') }}
 
     - name: Build and Push Profiler Docker Image
       id: docker-push
