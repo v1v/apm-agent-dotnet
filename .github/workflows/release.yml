@@ -75,7 +75,7 @@ jobs:
         cache-from: type=gha
         cache-to: type=gha,mode=max
         context: .
-        push: false
+        push: true
         tags: ${{ steps.docker-meta.outputs.tags }}
         labels: ${{ steps.docker-meta.outputs.labels }}
         build-args: |
@@ -87,7 +87,7 @@ jobs:
       with:
         subject-name: ${{ env.DOCKER_IMAGE_NAME }}
         subject-digest: ${{ steps.docker-push.outputs.digest }}
-        push-to-registry: false
+        push-to-registry: true
 
     - name: generate build provenance (APM Agent)
       uses: actions/attest-build-provenance@49df96e17e918a15956db358890b08e61c704919  # v1.2.0
